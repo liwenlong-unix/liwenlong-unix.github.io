@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第三周作业">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三周">
+<meta property="og:url" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/index.html">
+<meta property="og:site_name" content="linux">
+<meta property="og:description" content="第三周作业">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723192703393.png">
+<meta property="og:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723193034514.png">
+<meta property="og:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723194550940.png">
+<meta property="og:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723195144498.png">
+<meta property="og:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723193535635.png">
+<meta property="article:published_time" content="2022-07-23T18:43:27.000Z">
+<meta property="article:modified_time" content="2023-03-25T08:53:10.025Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/07/23/%E7%AC%AC%E4%B8%89%E5%91%A8/image-20220723192703393.png">
+  
+  
+  <title>第三周 - linux</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="第三周">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-23 18:43" pubdate>
+        July 23, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">第三周</h1>
+            
+            <div class="markdown-body">
+              <h1 id="第三周作业"><a href="#第三周作业" class="headerlink" title="第三周作业"></a>第三周作业</h1><span id="more"></span>
+
+<h1 id="1-RAID"><a href="#1-RAID" class="headerlink" title="1.RAID"></a>1.RAID</h1><h2 id="1-1-RAID简述"><a href="#1-1-RAID简述" class="headerlink" title="1.1 RAID简述"></a>1.1 RAID简述</h2><p>RAID,即磁盘阵列（Redundant Arrays of Independent Disks），是把多个物理磁盘组成一个阵列，当作一个逻辑磁盘使用。它将数据以分段或条带的方式储存在不同的磁盘中，这样可以通过在多个磁盘上同时存储和读取数据，来大幅提高存储系统的数据吞吐量。</p>
+<h2 id="1-2-RAID的等级"><a href="#1-2-RAID的等级" class="headerlink" title="1.2 RAID的等级"></a>1.2 RAID的等级</h2><h3 id="1-2-1-RAID-0"><a href="#1-2-1-RAID-0" class="headerlink" title="1.2.1 RAID-0"></a>1.2.1 RAID-0</h3><p>RAID-0被称为条带模式（stripe）。数据在此种RAID等级是分散存储，每个磁盘放置所要存储数据的一部分，读写性能得到了提升，需要的磁盘数为多于或等于两块磁盘，磁盘可用空间为磁盘数*最小磁盘的大小。</p>
+<p>当数据写入RAID时，数据会被切割成一块一块，然后依序放到不同的磁盘，如图所示。一方面读写性能得到了提升，但另一方面，由于数据切割分散存储于不同磁盘，一旦其中一块磁盘损坏，RAID上面所有数据都会损坏。因此，从数据安全方面考虑，重要数据不适合使用RAID-0。</p>
+<p><img src="image-20220723192703393.png" srcset="/img/loading.gif" lazyload alt="image-20220723192703393"></p>
+<h3 id="1-2-2-RAID-1"><a href="#1-2-2-RAID-1" class="headerlink" title="1.2.2 RAID-1"></a>1.2.2 RAID-1</h3><p>RAID-1被称作镜像模式（mirror），此种模式是让同一份完整的数据在多块不同的磁盘上存储。当数据写入RAID时，把每一份数据复制成相同的两份，分别放入两块磁盘中存放。这种模式可以实现数据备份作用。当其中一块磁盘损坏时，数据不受影响，如图所示。但此种模式需要复制多份数据到各个磁盘，在大量写入的情况下，写性能会降低；由于可以从不同磁盘读入数据，因此读性能会有略微提升。需要的磁盘数为多于或等于两块磁盘，磁盘可用空间为磁盘数*最小磁盘的大小/ 2。</p>
+<p><img src="image-20220723193034514.png" srcset="/img/loading.gif" lazyload alt="image-20220723193034514"></p>
+<h3 id="1-2-3-RAID-10"><a href="#1-2-3-RAID-10" class="headerlink" title="1.2.3 RAID 10"></a>1.2.3 RAID 10</h3><p>RAID 10为混合类型，即RAID 0 和RAID 1的组合，先把多个磁盘分组组成RAID 1，再把这些分组一起组成RAID 0。当数据写入时，先以RAID 0方式将数据分散到各个RAID 1组，再以RAID 1的方式复制多份数据在磁盘上完整存储，如图所示。</p>
+<p><img src="image-20220723194550940.png" srcset="/img/loading.gif" lazyload alt="image-20220723194550940"></p>
+<h3 id="1-2-4-RAID-01"><a href="#1-2-4-RAID-01" class="headerlink" title="1.2.4 RAID 01"></a>1.2.4 RAID 01</h3><p>RAID 01也是RAID 0和RAID 1的组合，不过是先把多个磁盘组合成RAID 0，再将分组组成RAID 1。数据写入时，先以RAID 1方式复制数据到各个RAID 0组，再以RAID 0的方式在各分组中将数据写入。当其中任意一块磁盘损坏时都不影响数据的读写。</p>
+<p><img src="image-20220723195144498.png" srcset="/img/loading.gif" lazyload alt="image-20220723195144498"></p>
+<h3 id="1-2-5-RAID-5"><a href="#1-2-5-RAID-5" class="headerlink" title="1.2.5 RAID-5"></a>1.2.5 RAID-5</h3><p>RAID-5对性能和数据备份进行了均衡考虑，实现方式是使用3块或3块以上磁盘组成磁盘阵列。数据写入方式类似于RAID-0，但区别是在每个循坏写入过程中，轮流在其中一块磁盘存储其他几个磁盘数据的同位校验码（parity），同位检验码为同位其他数据相与或所得，当其中任何一个磁盘损坏时，可通过其他磁盘的校验码来重建磁盘的数据。但当多于一块磁盘损坏时，数据则无法恢复。</p>
+<p>RAID-5对读性能有较好的提升，由于写入时需要对数据进行同位校验码计算，所以写性能的提升较低于读性能的提升。磁盘可用空间为：（磁盘数-1）*最小磁盘的大小。</p>
+<p><img src="image-20220723193535635.png" srcset="/img/loading.gif" lazyload alt="image-20220723193535635"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/25/Linux%E6%89%A9%E5%AE%B9root%E7%9B%AE%E5%BD%95%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux扩容root目录磁盘空间</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/04/%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D/">
+                        <span class="hidden-mobile">修改网卡名</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

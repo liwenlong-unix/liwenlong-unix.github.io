@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基于Kubernetes+GitLab+Drone构建CICD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Kubernetes+GitLab+Drone构建CICD">
+<meta property="og:url" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/index.html">
+<meta property="og:site_name" content="linux">
+<meta property="og:description" content="基于Kubernetes+GitLab+Drone构建CICD">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322094251973.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322094623096.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322094810297.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322094949636.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322095111733.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322095338958.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322095725832.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322095847348.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322100008673.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322123421712.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322123507088.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322123658494.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322124936977.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322132146074.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322132958077.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322133257160.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322140948203.png">
+<meta property="og:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322141126709.png">
+<meta property="article:published_time" content="2023-03-25T14:34:50.000Z">
+<meta property="article:modified_time" content="2023-03-25T08:53:10.008Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/03/25/%E5%9F%BA%E4%BA%8EKubernetes-GitLab-Drone%E6%9E%84%E5%BB%BACICD/image-20230322094251973.png">
+  
+  
+  <title>基于Kubernetes+GitLab+Drone构建CICD - linux</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="基于Kubernetes+GitLab+Drone构建CICD">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-03-25 14:34" pubdate>
+        March 25, 2023 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      12k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      97 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于Kubernetes+GitLab+Drone构建CICD</h1>
+            
+            <div class="markdown-body">
+              <h1 id="基于Kubernetes-GitLab-Drone构建CICD"><a href="#基于Kubernetes-GitLab-Drone构建CICD" class="headerlink" title="基于Kubernetes+GitLab+Drone构建CICD"></a>基于Kubernetes+GitLab+Drone构建CICD</h1><span id="more"></span>
+
+<h2 id="1-案例目标"><a href="#1-案例目标" class="headerlink" title="1.案例目标"></a>1.案例目标</h2><p>（1）掌握Drone的使用和管理。</p>
+<p>（2）掌握Gitlab的使用和管理。</p>
+<p>（3）了解CICD的配置步骤和方法。</p>
+<h2 id="2-节点规划"><a href="#2-节点规划" class="headerlink" title="2.节点规划"></a>2.节点规划</h2><table>
+<thead>
+<tr>
+<th><strong>IP</strong></th>
+<th><strong>主机名</strong></th>
+<th><strong>节点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>172.129.101.43</td>
+<td>k8s-master-node1</td>
+<td>master节点、Harbor仓库节点</td>
+</tr>
+<tr>
+<td>172.129.101.74</td>
+<td>k8s-worker-node1</td>
+<td>node节点</td>
+</tr>
+</tbody></table>
+<h2 id="3-案例实施"><a href="#3-案例实施" class="headerlink" title="3.案例实施"></a>3.案例实施</h2><h3 id="3-1部署gitlab"><a href="#3-1部署gitlab" class="headerlink" title="3.1部署gitlab"></a>3.1部署gitlab</h3><p>解压软件包并导入镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 ~]# curl -O http://172.129.101.30/Drone.tar.gz<br>[root@k8s-master-node1 ~]# tar zxvf Drone.tar.gz<br>[root@k8s-master-node1 Drone]# ls<br>demo-2048.tar.gz  image.tar<br>[root@k8s-master-node1 Drone]# docker load -i image.tar<br></code></pre></td></tr></table></figure>
+
+<p>部署Gitlab</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># cat gitlab.yaml </span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">replicas:</span> <span class="hljs-number">1</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">matchLabels:</span><br>      <span class="hljs-attr">app:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">template:</span><br>    <span class="hljs-attr">metadata:</span><br>      <span class="hljs-attr">labels:</span><br>        <span class="hljs-attr">app:</span> <span class="hljs-string">gitlab</span><br>    <span class="hljs-attr">spec:</span><br>      <span class="hljs-attr">containers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">gitlab/gitlab-ce</span><br>        <span class="hljs-attr">name:</span> <span class="hljs-string">gitlab-ce</span><br>        <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span><br>        <span class="hljs-attr">env:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">GITLAB_ROOT_PASSWORD</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">P@sswOrd</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Service</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">ports:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">gitlab</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">protocol:</span> <span class="hljs-string">TCP</span><br>    <span class="hljs-attr">targetPort:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">nodePort:</span> <span class="hljs-number">30888</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">gitlab</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">NodePort</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl create ns devops</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl apply -f gitlab.yaml </span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl get pods -n devops</span><br><span class="hljs-string">NAME</span>                      <span class="hljs-string">READY</span>   <span class="hljs-string">STATUS</span>    <span class="hljs-string">RESTARTS</span>   <span class="hljs-string">AGE</span><br><span class="hljs-string">gitlab-54b6f68589-pp4jk</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">7s</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl get svc -n devops</span><br><span class="hljs-string">NAME</span>     <span class="hljs-string">TYPE</span>       <span class="hljs-string">CLUSTER-IP</span>      <span class="hljs-string">EXTERNAL-IP</span>   <span class="hljs-string">PORT(S)</span>        <span class="hljs-string">AGE</span><br><span class="hljs-string">gitlab</span>   <span class="hljs-string">NodePort</span>   <span class="hljs-number">10.96</span><span class="hljs-number">.214</span><span class="hljs-number">.137</span>   <span class="hljs-string">&lt;none&gt;</span>        <span class="hljs-number">80</span><span class="hljs-string">:30888/TCP</span>   <span class="hljs-string">7s</span><br></code></pre></td></tr></table></figure>
+
+<p>GitLab启动较慢，等待5-10分钟左右，在浏览器上通过<a href="http://master_IP:30888访问GitLab">http://master_IP:30888访问GitLab</a></p>
+<p><img src="image-20230322094251973.png" srcset="/img/loading.gif" lazyload alt="image-20230322094251973"></p>
+<p>登录Gitlab,用户名为root，密码为P@sswOrd。</p>
+<p><img src="image-20230322094623096.png" srcset="/img/loading.gif" lazyload alt="image-20230322094623096"></p>
+<p>点击右上角头像，然后点击”Edit profile“进入User Settings界面</p>
+<p><img src="image-20230322094810297.png" srcset="/img/loading.gif" lazyload alt="image-20230322094810297"></p>
+<p>点击左侧导航栏“Applications”，创建一个GitLab OAuth应用程序，名字为drone，Redirect URL为Drone登录地址，并勾选api和read_user。</p>
+<p><img src="image-20230322094949636.png" srcset="/img/loading.gif" lazyload alt="image-20230322094949636"></p>
+<p>配置完成后保存。</p>
+<p><img src="image-20230322095111733.png" srcset="/img/loading.gif" lazyload alt="image-20230322095111733"></p>
+<p>登录admin管理员页面（<a target="_blank" rel="noopener" href="http://master_ip:30888/admin%EF%BC%89%EF%BC%8C%E4%BE%9D%E6%AC%A1%E7%82%B9%E5%87%BB%E2%80%9CSettings%E2%80%9D%E2%86%92%E2%80%9CNetwork%E2%80%9D%E2%86%92%E2%80%9COutbound">http://master_IP:30888/admin），依次点击“Settings”→“Network”→“Outbound</a> requests”，勾选“Allow requests to the local network from web hooks and services”。</p>
+<p><img src="image-20230322095338958.png" srcset="/img/loading.gif" lazyload alt="image-20230322095338958"></p>
+<p>点击“Save changes”保存。</p>
+<h3 id="3-2导入项目到Gitlab"><a href="#3-2导入项目到Gitlab" class="headerlink" title="3.2导入项目到Gitlab"></a>3.2导入项目到Gitlab</h3><p>登录GitLab首页,点击“New project”</p>
+<p><img src="image-20230322095725832.png" srcset="/img/loading.gif" lazyload alt="image-20230322095725832"></p>
+<p>选择“Import project”,点击“GitLab export”，然后在“Project name”和“Project slug”处输入“demo-2048”，点击“选择文件”，选择提供的软件包demo-2048.tar.gz。</p>
+<p><img src="image-20230322095847348.png" srcset="/img/loading.gif" lazyload alt="image-20230322095847348"></p>
+<p>点击“Import project”导入项目</p>
+<p><img src="image-20230322100008673.png" srcset="/img/loading.gif" lazyload alt="image-20230322100008673"></p>
+<h3 id="3-3部署Drone"><a href="#3-3部署Drone" class="headerlink" title="3.3部署Drone"></a>3.3部署Drone</h3><p>创建共享密钥</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@k8s</span>-master-node1 Drone]<span class="hljs-meta"># openssl rand -hex 16c</span><br>b221f2ed9e6e3ce4610232f29b54f744<br></code></pre></td></tr></table></figure>
+
+<p>编写DroneYAML文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># cat drone-server.yaml </span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">drone-server</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone-server</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">replicas:</span> <span class="hljs-number">1</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">matchLabels:</span><br>      <span class="hljs-attr">app:</span> <span class="hljs-string">drone-server</span><br>  <span class="hljs-attr">template:</span><br>    <span class="hljs-attr">metadata:</span><br>      <span class="hljs-attr">labels:</span><br>        <span class="hljs-attr">app:</span> <span class="hljs-string">drone-server</span><br>    <span class="hljs-attr">spec:</span><br>      <span class="hljs-attr">containers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">drone/drone:1.10.1</span><br>        <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br>        <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span><br>        <span class="hljs-attr">env:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_GITLAB_CLIENT_ID</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">189b8fc91bdd0f8629df2e55682c0c4c93f857e053b1c08d68f1faf1df556931</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_GITLAB_CLIENT_SECRET</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">628e7167bf7ebb13154c8d9b75310740e12559b11404d626a20f1376b49f126d</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_RPC_SECRET</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">b221f2ed9e6e3ce4610232f29b54f744</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_GITLAB_SERVER</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">http://172.129.101.43:30888</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_SERVER_HOST</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-number">172.129</span><span class="hljs-number">.101</span><span class="hljs-number">.43</span><span class="hljs-string">:30839</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_SERVER_PROTO</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">http</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_GITLAB</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">&quot;true&quot;</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_USER_CREATE</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">&quot;username:root,admin:true&quot;</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_AGENTS_ENABLED</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">&quot;true&quot;</span><br>      <span class="hljs-attr">restartPolicy:</span> <span class="hljs-string">Always</span><br>      <span class="hljs-attr">imagePullSecrets:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">harbor</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Service</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">drone-server-service</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone-server-service</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">ports:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">protocol:</span> <span class="hljs-string">TCP</span><br>    <span class="hljs-attr">targetPort:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">nodePort:</span> <span class="hljs-number">30839</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">drone-server</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">NodePort</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl apply -f drone-server.yaml </span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl get pods -n devops </span><br><span class="hljs-string">NAME</span>                            <span class="hljs-string">READY</span>   <span class="hljs-string">STATUS</span>    <span class="hljs-string">RESTARTS</span>   <span class="hljs-string">AGE</span><br><span class="hljs-string">drone-server-778db9fd9c-xf9nn</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">2m5s</span><br><span class="hljs-string">gitlab-54b6f68589-p75j6</span>         <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">41m</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4部署Drone-runner"><a href="#3-4部署Drone-runner" class="headerlink" title="3.4部署Drone runner"></a>3.4部署Drone runner</h3><p>编写Drone runner YAML文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs yaml">[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># cat drone-runner.yaml </span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">ServiceAccount</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">rbac.authorization.k8s.io/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Role</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">rules:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">apiGroups:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;&quot;</span><br>  <span class="hljs-attr">resources:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">pods</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">pods/log</span><br>  <span class="hljs-attr">verbs:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">get</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">list</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">watch</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">create</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">delete</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">update</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">apiGroups:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;&quot;</span><br>  <span class="hljs-attr">resources:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">secrets</span><br>  <span class="hljs-attr">verbs:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">create</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">delete</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">rbac.authorization.k8s.io/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">RoleBinding</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">roleRef:</span><br>  <span class="hljs-attr">apiGroup:</span> <span class="hljs-string">rbac.authorization.k8s.io</span><br>  <span class="hljs-attr">kind:</span> <span class="hljs-string">Role</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br><span class="hljs-attr">subjects:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">kind:</span> <span class="hljs-string">ServiceAccount</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-meta">---</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app.kubernetes.io/name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">drone-runner</span><br>  <span class="hljs-attr">namespace:</span> <span class="hljs-string">devops</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">replicas:</span> <span class="hljs-number">1</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">matchLabels:</span><br>      <span class="hljs-attr">app.kubernetes.io/name:</span> <span class="hljs-string">drone</span><br>  <span class="hljs-attr">template:</span><br>    <span class="hljs-attr">metadata:</span><br>      <span class="hljs-attr">labels:</span><br>        <span class="hljs-attr">app.kubernetes.io/name:</span> <span class="hljs-string">drone</span><br>    <span class="hljs-attr">spec:</span><br>      <span class="hljs-attr">serviceAccountName:</span> <span class="hljs-string">drone</span><br>      <span class="hljs-attr">serviceAccount:</span> <span class="hljs-string">drone</span><br>      <span class="hljs-attr">containers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">drone/drone-runner-kube</span><br>        <span class="hljs-attr">name:</span> <span class="hljs-string">drone-runner-kube</span><br>        <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span><br>        <span class="hljs-attr">env:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_RPC_HOST</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-number">172.129</span><span class="hljs-number">.101</span><span class="hljs-number">.43</span><span class="hljs-string">:30839</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_RPC_PROTO</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">http</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">DRONE_RPC_SECRET</span><br>          <span class="hljs-attr">value:</span> <span class="hljs-string">b221f2ed9e6e3ce4610232f29b54f744</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl apply -f drone-runner.yaml</span><br>[<span class="hljs-string">root@k8s-master-node1</span> <span class="hljs-string">Drone</span>]<span class="hljs-comment"># kubectl get pods -n devops</span><br><span class="hljs-string">NAME</span>                            <span class="hljs-string">READY</span>   <span class="hljs-string">STATUS</span>    <span class="hljs-string">RESTARTS</span>   <span class="hljs-string">AGE</span><br><span class="hljs-string">drone-runner-6667f5bf55-nfnn7</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">8s</span><br><span class="hljs-string">drone-server-778db9fd9c-xf9nn</span>   <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">133m</span><br><span class="hljs-string">gitlab-54b6f68589-p75j6</span>         <span class="hljs-number">1</span><span class="hljs-string">/1</span>     <span class="hljs-string">Running</span>   <span class="hljs-number">0</span>          <span class="hljs-string">172m</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5访问并配置Drone"><a href="#3-5访问并配置Drone" class="headerlink" title="3.5访问并配置Drone"></a>3.5访问并配置Drone</h3><p>在浏览器上通过<a href="http://master_IP:30839访问Drone，系统将自动重定向到GitLab进行登录。">http://master_IP:30839访问Drone，系统将自动重定向到GitLab进行登录。</a></p>
+<p><img src="image-20230322123421712.png" srcset="/img/loading.gif" lazyload alt="image-20230322123421712"></p>
+<p>点击Authorize。</p>
+<p><img src="image-20230322123507088.png" srcset="/img/loading.gif" lazyload alt="image-20230322123507088"></p>
+<p>点击“/root/demo-2048”存储库后的“ACTIVATE”按钮。然后点击“ACTIVATE REPOSTIORY”启用存储库。</p>
+<p><img src="image-20230322123658494.png" srcset="/img/loading.gif" lazyload alt="image-20230322123658494"></p>
+<p>勾选“Trusted”选项，然后点击“SAVE”保存。</p>
+<p>添加环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 Drone]# kubectl create sa drone-admin -n kube-system<br>[root@k8s-master-node1 Drone]# kubectl create clusterrolebinding drone-admin -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:drone-admin<br></code></pre></td></tr></table></figure>
+
+<p>获取该用户的Token：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 Drone]# kubectl describe secrets -n devops drone-token-lr79d <br>Name:         drone-token-lr79d<br>Namespace:    devops<br>Labels:       &lt;none&gt;<br>Annotations:  kubernetes.io/service-account.name: drone<br>              kubernetes.io/service-account.uid: 90a34e80-9b78-49ba-a02f-06c7b000fc15<br><br>Type:  kubernetes.io/service-account-token<br><br>Data<br>====<br>ca.crt:     1099 bytes<br>namespace:  6 bytes<br>token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InkxZFdIa09XckFpNnNqci1wT0Q2LW5WTjg2UzR4ejJoVElsQXh4ckYxNXcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZXZvcHMiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiZHJvbmUtdG9rZW4tbHI3OWQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZHJvbmUiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5MGEzNGU4MC05Yjc4LTQ5YmEtYTAyZi0wNmM3YjAwMGZjMTUiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGV2b3BzOmRyb25lIn0.UDo0nVXZJHP2IvCpLixQKz6LBD5iCYHVr3mBMVYM2yzyO02JoRq_WAEzemDYN3KpjKws-SyXMcfPKotgxADaYqXikpyrBec8Ov_QfJv3qQOudAthmIJ0zgxZekPBQ0HVc77q7seDzrcKDi3BZGZEffnDX4eZUGqgKOdYjfTouv8_Mvf0q1adCp72bqZIQvG-s1mvMvDPuMQe6BoP6_Tf1XDwzr22edUTyq1KiEOkstKE0wTVfeEiMzNY5nFiqbE5cmbGGcE1eVrUdH118GxSH4ioml3Lnrt6TmvPsna-6200b7HCrsBiI8BJaeafOcO_1H4XnW8-9z5nx4teXNxKFw<br></code></pre></td></tr></table></figure>
+
+<p>获取Kubernetes CA证书的Base-64编码的字符串：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 Drone]# base64 /etc/kubernetes/pki/ca.crt <br>LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMvakNDQWVhZ0F3SUJBZ0lCQURBTkJna3Fo<br>a2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJek1ETXlN<br>akF3TlRVeE0xb1hEVE16TURNeE9UQXdOVFV4TTFvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVa<br>WFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTytGCm41dTFE<br>ZVBsbVVva0htSmhqeWFWOUFBMjJIZnJJS0lCakc4SE9RVS9xN3N3RjNxbDBiTHM4dHNwd1RwbytG<br>bFYKYloyc0pBL1l5ZHpHT2Y3NE5qQXFRRVp5cHFaUFFTOGhkY0twOXpJL0pTTWdnRDhhekI2RFFP<br>S1Jyc2lmVy9MRQpURnlsVlJYNVF5ZTdPM2cyYlZPV0JoWEhqUXlGaDhTVVBJS0V1YThyZ25YRW16<br>dmJDNDJ1KzMxOS9xbjFYajlCCnJSUUIzSVZHU0pXbEdjRGlHbEpzMERkZGVzTEpURHV6MFp1TlNO<br>ZG9qREdDMWVoTUtXVWZpQnJuaExMZUt1c1QKYmtySFN0TFJiZEYwd1FYUjBLbmNmU3R6Q0ptSElv<br>V0xVTlNFdC9tc1gvcC91K0JvS3lvYnp2bEVGbDhLaHpENQpCUU0wR1BydVhwOGRWdGRkZzQ4Q0F3<br>RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0hR<br>WURWUjBPQkJZRUZIV2hpUW1VL3BpY01kNkJQb2dJVkdEMnE5NGVNQlVHQTFVZEVRUU8KTUF5Q0Nt<br>dDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBTU4rNEI0cTFJd3BNdEk5YURm<br>eQovYXZhanAzY085d3AwYVRjeTdHc09lRVZRaUpOTW1QZFN4d08zYXFVMEx1OHlKVnpmTG0yZDQ3<br>Z1ZWaFFhUE85CitTOWt1bjVFc3krNktUM0dnU2Z4QW5jdFNsbXl2MXhCSm13WmNMekNKTHVrSTVh<br>c1ZzRDhKTVUwek9Dck9ReUoKNU5OeUJjMldHNVBGVVdkU2NPZ01BdFBET2hOYXluaFVScm1pTVlh<br>WGs3TU1TS0FCZkRBYjVHOG9pNFJDemN0RQo4T2wxaFNNVW5PaDBINDdHUVU3Tmg1SVIxUnY4LzVx<br>dW82NGY3T1RjclJVOEdrOS9JUTB2eVdpUytodCt5enFxCmtmUlRyMW1Genh6elBHek9mWklZYytz<br>VzdMWXZUaFkzTDgxcUVTbys3MEVDODlENlI1NW42Nlpoc3RkYTlHSkgKK01FPQotLS0tLUVORCBD<br>RVJUSUZJQ0FURS0tLS0tCg==<br></code></pre></td></tr></table></figure>
+
+<p>在Secrets处配置k8s_token、k8s_ca、harbor_username和harbor_password四个环境变量。</p>
+<p><img src="image-20230322124936977.png" srcset="/img/loading.gif" lazyload alt="image-20230322124936977"></p>
+<h3 id="3-6Drone-CI"><a href="#3-6Drone-CI" class="headerlink" title="3.6Drone CI"></a>3.6Drone CI</h3><p>集群中设置映射</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 Drone]# kubectl get configmap -n kube-system<br>NAME                                 DATA   AGE<br>coredns                              1      4h20m<br>extension-apiserver-authentication   6      4h21m<br>kube-flannel-cfg                     2      4h20m<br>kube-proxy                           2      4h20m<br>kube-root-ca.crt                     1      4h20m<br>kubeadm-config                       1      4h20m<br>kubelet-config-1.22                  1      4h20m<br>multus-cni-config                    1      4h18m<br>[root@k8s-master-node1 Drone]# kubectl edit configmap coredns -n kube-system<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Please edit the object below. Lines beginning with a <span class="hljs-string">&#x27;#&#x27;</span> will be ignored,</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">and an empty file will abort the edit. If an error occurs <span class="hljs-keyword">while</span> saving this file will be</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">reopened with the relevant failures.</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash">apiVersion: v1</span><br>data:<br>  Corefile: |<br>    .:53 &#123;<br>        errors<br>        health &#123;<br>           lameduck 5s<br>        &#125;<br>        ready<br>        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;<br>           pods insecure<br>           fallthrough in-addr.arpa ip6.arpa<br>           ttl 30<br>        &#125;<br>        hosts &#123;<br>           10.244.0.12 gitlab-54b6f68589-p75j6<br>           fallthrough<br>        &#125;<br>        prometheus :9153<br>        cache 30<br>        loop<br>        reload<br>        loadbalance<br>    &#125;<br>[root@k8s-master-node1 Drone]# kubectl rollout restart deployment  coredns -n kube-system <br>deployment.apps/coredns restarted<br></code></pre></td></tr></table></figure>
+
+<p>登录<a href="javascript:void(0)">Harbor</a>仓库，创建一个公开项目devops。</p>
+<p><img src="image-20230322132146074.png" srcset="/img/loading.gif" lazyload alt="image-20230322132146074"></p>
+<p>将镜像tomcat:8.5.64-jdk8重新打标签并上传到Harbor仓库中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@k8s-master-node1 Drone]# docker tag tomcat:8.5.64-jdk8 172.129.101.43/devops/tomcat:8.5.64-jdk8<br>[root@k8s-master-node1 Drone]# docker push 172.129.101.43/devops/tomcat:8.5.64-jdk8                  <br>The push refers to repository [172.129.101.43/devops/tomcat]<br>1e67828f850e: Pushed <br>3d274044a896: Pushed <br>38a36b002858: Pushed <br>017f7f703852: Pushed <br>e82847cd9a33: Pushed <br>2a2d81e590da: Pushed <br>b1169e57b139: Pushed <br>b3577d595e75: Pushed <br>3ee270f20d54: Pushed <br>4ef4adca5c3b: Pushed <br>8.5.64-jdk8: digest: sha256:23501038ac13ca2f6382f08d33d24e639ba5b0f9ca0d56e703b9e4df97fb3342 size: 2421<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-7触发构建"><a href="#3-7触发构建" class="headerlink" title="3.7触发构建"></a>3.7触发构建</h3><p>登录GitLab并进入项目demo-2048，选择分支drone。点击Dockerfiles，然后点击Dockerfile，修改IP</p>
+<p><img src="image-20230322132958077.png" srcset="/img/loading.gif" lazyload alt="image-20230322132958077"></p>
+<p>修改完成后点击“Commit changes”保存。</p>
+<p>返回drone分支，修改template下的<a target="_blank" rel="noopener" href="http://10.24.2.36:8888/root/demo-2048/-/blob/drone/template/demo-2048.yaml">demo-2048.yaml</a>模板下的IP为master节点IP</p>
+<p><img src="image-20230322133257160.png" srcset="/img/loading.gif" lazyload alt="image-20230322133257160"></p>
+<p>编写流水线脚本.drone.yml：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">kind</span><span class="hljs-punctuation">:</span> <span class="hljs-string">pipeline</span><br><span class="hljs-attribute">type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">kubernetes</span><br><span class="hljs-attribute">name</span><span class="hljs-punctuation">:</span> <span class="hljs-string">demo-2048</span><br><span class="hljs-attribute">clone</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">skip_verify</span><span class="hljs-punctuation">:</span> <span class="hljs-string">true</span><br><span class="hljs-attribute">metadata</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">namespace</span><span class="hljs-punctuation">:</span> <span class="hljs-string">devops</span><br><span class="hljs-attribute">node_selector</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">kubernetes.io/hostname</span><span class="hljs-punctuation">:</span> <span class="hljs-string">k8s-master-node1</span><br><span class="hljs-attribute">volumes</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">name: cache</span><br>      <span class="hljs-attribute">host</span><span class="hljs-punctuation">:</span><br>          <span class="hljs-attribute">path</span><span class="hljs-punctuation">:</span> <span class="hljs-string">/data/cache</span><br><span class="hljs-attribute">steps</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">name: build code</span><br>      <span class="hljs-attribute">image</span><span class="hljs-punctuation">:</span> <span class="hljs-string">maven:3.6-jdk-8</span><br>      <span class="hljs-attribute">commands</span><span class="hljs-punctuation">:</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">mvn clean install -DskipTests=true</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">cd target &amp;&amp; jar -xf 2048.war</span><br>          <span class="hljs-bullet">-</span> <span class="hljs-string">ls -l</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">name: build image &amp; push</span><br>      <span class="hljs-attribute">image</span><span class="hljs-punctuation">:</span> <span class="hljs-string">plugins/docker</span><br>      <span class="hljs-attribute">settings</span><span class="hljs-punctuation">:</span><br>          <span class="hljs-attribute">repo</span><span class="hljs-punctuation">:</span> <span class="hljs-string">172.129.101.43/devops/demo-2048</span><br>          <span class="hljs-attribute">registry</span><span class="hljs-punctuation">:</span> <span class="hljs-string">172.129.101.43</span><br>          <span class="hljs-attribute">username</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">harbor_username</span><br>          <span class="hljs-attribute">password</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">harbor_password</span><br>          <span class="hljs-attribute">tags</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-bullet">-</span> <span class="hljs-string">$&#123;DRONE_BRANCH&#125;-$&#123;DRONE_COMMIT&#125;-$&#123;DRONE_BUILD_NUMBER&#125;</span><br>          <span class="hljs-attribute">insecure</span><span class="hljs-punctuation">:</span> <span class="hljs-string">true</span><br>          <span class="hljs-attribute">dockerfile</span><span class="hljs-punctuation">:</span> <span class="hljs-string">./Dockerfiles/Dockerfile</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">name: k8s-service</span><br>      <span class="hljs-attribute">image</span><span class="hljs-punctuation">:</span> <span class="hljs-string">danielgormly/drone-plugin-kube:0.2.0</span><br>      <span class="hljs-attribute">settings</span><span class="hljs-punctuation">:</span><br>          <span class="hljs-attribute">build_tag</span><span class="hljs-punctuation">:</span> <span class="hljs-string">$&#123;DRONE_BRANCH&#125;-$&#123;DRONE_COMMIT&#125;-$&#123;DRONE_BUILD_NUMBER&#125;</span><br>          <span class="hljs-attribute">template</span><span class="hljs-punctuation">:</span> <span class="hljs-string">template/demo-2048.yaml</span><br>          <span class="hljs-attribute">server</span><span class="hljs-punctuation">:</span> <span class="hljs-string">https://172.129.101.43:6443</span><br>          <span class="hljs-attribute">token</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">k8s_token</span><br>          <span class="hljs-attribute">ca</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">k8s_ca</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-string">name: k8s-deploy</span><br>      <span class="hljs-attribute">image</span><span class="hljs-punctuation">:</span> <span class="hljs-string">danielgormly/drone-plugin-kube:0.2.0</span><br>      <span class="hljs-attribute">settings</span><span class="hljs-punctuation">:</span><br>          <span class="hljs-attribute">build_tag</span><span class="hljs-punctuation">:</span> <span class="hljs-string">$&#123;DRONE_BRANCH&#125;-$&#123;DRONE_COMMIT&#125;-$&#123;DRONE_BUILD_NUMBER&#125;</span><br>          <span class="hljs-attribute">template</span><span class="hljs-punctuation">:</span> <span class="hljs-string">template/service.yaml</span><br>          <span class="hljs-attribute">server</span><span class="hljs-punctuation">:</span> <span class="hljs-string">https://172.129.101.43:6443</span><br>          <span class="hljs-attribute">token</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">k8s_token</span><br>          <span class="hljs-attribute">ca</span><span class="hljs-punctuation">:</span><br>              <span class="hljs-attribute">from_secret</span><span class="hljs-punctuation">:</span> <span class="hljs-string">k8s_ca</span><br><span class="hljs-attribute">trigger</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">branch</span><span class="hljs-punctuation">:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">drone</span><br></code></pre></td></tr></table></figure>
+
+<p>登录<a target="_blank" rel="noopener" href="http://master_ip:30839/root/demo-2048%E6%9F%A5%E7%9C%8B%E6%9E%84%E5%BB%BA%E7%BB%93%E6%9E%9C">http://master_IP:30839/root/demo-2048查看构建结果</a></p>
+<p><img src="image-20230322140948203.png" srcset="/img/loading.gif" lazyload alt="image-20230322140948203"></p>
+<p>访问http:// master_IP:8889</p>
+<p><img src="image-20230322141126709.png" srcset="/img/loading.gif" lazyload alt="image-20230322141126709"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/k8s/">k8s</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/25/Linux%E6%89%A9%E5%AE%B9root%E7%9B%AE%E5%BD%95%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4/">
+                        <span class="hidden-mobile">Linux扩容root目录磁盘空间</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
